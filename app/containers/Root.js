@@ -1,24 +1,28 @@
-// @flow
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
-import type { Store } from '../reducers/types';
-import Routes from '../Routes';
+import WebpageViewer from './WebpageViewer';
 
-type Props = {
-  store: Store,
-  history: {}
-};
-
-export default class Root extends Component<Props> {
+class Root extends Component {
   render() {
     const { store, history } = this.props;
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Routes />
+          <Switch>
+            <Route component={WebpageViewer} />
+          </Switch>
         </ConnectedRouter>
       </Provider>
     );
   }
 }
+
+Root.propTypes = {
+  store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
+};
+
+export default Root;
